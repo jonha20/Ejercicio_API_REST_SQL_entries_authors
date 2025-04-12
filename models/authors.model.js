@@ -9,19 +9,21 @@ const pool = new Pool({
     password: '123456'
   });
 
-  const getAllAuthors = async () => {
-    let client, result;
-    try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getAllAuthors)
-        result = data.rows
-    } catch (err) {
-        console.log(err);
-        throw err;
-    } finally {
-        client.release();
-    }
-    return result
+//GET
+
+const getAllAuthors = async () => {
+let client, result;
+try {
+    client = await pool.connect(); // Espera a abrir conexion
+    const data = await client.query(queries.getAllAuthors)
+    result = data.rows
+} catch (err) {
+    console.log(err);
+    throw err;
+} finally {
+    client.release();
+}
+return result
 }
 
 getAllAuthors()
@@ -29,21 +31,21 @@ getAllAuthors()
 
 
 const getAlejandru = async (entry) => {
-    const {email} = entry;
-    let client, result;
-    try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.getAlejandru,[
-            email
-        ]);
-        result = data.rows
-    } catch (err) {
-        console.log(err);
-        throw err;
-    } finally {
-        client.release();
-    }
-    return result
+const {email} = entry;
+let client, result;
+try {
+    client = await pool.connect(); // Espera a abrir conexion
+    const data = await client.query(queries.getAlejandru,[
+        email
+    ]);
+    result = data.rows
+} catch (err) {
+    console.log(err);
+    throw err;
+} finally {
+    client.release();
+}
+return result
 }
 
 
@@ -54,7 +56,7 @@ const getAlejandrudata = {
 getAlejandru(getAlejandrudata)
     .then(data => console.log(data))
 
-
+//DELETE
 
 const deleteEntry = async (entry) => {
     const {email} = entry;
@@ -81,6 +83,7 @@ const deletedEntry = {
 deleteEntry(deletedEntry)
     .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.email))
 
+//UPDATE
 
 const updateEntry = async (entry) => {
     const { name, surname, email, image, old_email } = entry;
@@ -115,6 +118,7 @@ const updatedEntry = {
 updateEntry(updatedEntry)
     .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.email))
 
+//INSERT
 
 const insertEntry = async (entry) => {
     const { name, surname, email, image } = entry;

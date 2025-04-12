@@ -10,6 +10,7 @@ const pool = new Pool({
   });
 
 // GET
+
 const getAllEntriesSinId = async () => {
     let client, result;
     try {
@@ -45,17 +46,8 @@ const deleteEntry = async (entry) => {
     return result
 }
 
-//UPDATE
-/* 
-{
-    title: "Se acabaron las tortillas del Markina",
-    content: "Estaban demasiado muy buenas y se las han comido todas",
-    date:"2024-06-17"
-    email: "guillermu@thebridgeschool.es",
-    category: "sucesos",
-    old_title:"El titulo antiguo a cambiar"
-}
-*/
+//UPDATE 
+
 const updateEntry = async (entry) => {
     const { title, content, date, email, category, old_title } = entry;
     let client, result;
@@ -87,29 +79,13 @@ const entries = {
 
 module.exports = entries;
 
-
-// Pruebas
-
-  /*  getEntriesByEmail("birja@thebridgeschool.es")
-    .then(data=>console.log(data)) */
+//DATOS POR CONSOLA
 
 
-
-    getAllEntriesSinId()
+getAllEntriesSinId()
 .then(data=>console.log(data))
 
 
-/*
- let newEntry = {
-    title: "Se acabaron las tortillas del Markina",
-    content: "Estaban demasiado muy buenas y se las han comido todas",
-    email: "guillermu@thebridgeschool.es",
-    category: "sucesos"
-}
-
-createEntry(newEntry)
-    .then(data => console.log(data))
-    */
 
 
 const updatedEntry = {
@@ -127,9 +103,9 @@ updateEntry(updatedEntry)
 
 
 
-    const deletedEntry = {
-        title: "El rayo gana la champions"
-    }
-    
-    deleteEntry(deletedEntry)
-        .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.title))
+const deletedEntry = {
+    title: "El rayo gana la champions"
+}
+
+deleteEntry(deletedEntry)
+    .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.title))

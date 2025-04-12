@@ -1,13 +1,6 @@
 const entry = require("../models/entries.model"); // Importar el modelo de la BBDD
 
-//getEntries
-// if(hay email)
-//     busca por mail
-// else
-//     busca todo
 
-// GET http://localhost:3000/api/entries --> ALL
-// GET http://localhost:3000/api/entries?email=hola@gmail.com --> por email
 const getAllEntriesSinId = async (req, res) => {
   let entries;
   try {
@@ -64,5 +57,5 @@ const deleteEntry = async (req, res) => {
 module.exports = {
   getAllEntriesSinId,
   deleteEntry,
-  updateEntry, //--> PUT
+  updateEntry
 };
