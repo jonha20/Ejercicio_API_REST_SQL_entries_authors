@@ -1,4 +1,4 @@
-const entry = require("../models/authors.model"); // Importar el modelo de la BBDD
+const entry = require("../config/db_pgsql"); // Importar el modelo de la BBDD
 
 
 const getAllAuthors = async (req, res) => {
