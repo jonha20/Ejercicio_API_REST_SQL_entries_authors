@@ -10,6 +10,7 @@ const port = 3000;
 //app.use(morgan(':method :url :status :param[id] - :response-time ms :body'));
 
 // Rutas
+const authorsRoutes = require("./routes/authors.routes")
 const entriesRoutes = require("./routes/entries.routes")
 
 app.use(express.json()); // Habilito recepción de JSON en servidor
@@ -17,6 +18,8 @@ app.use(express.json()); // Habilito recepción de JSON en servidor
 
 // Rutas
 //API
+
+app.use('/api/authors',authorsRoutes);
 app.use('/api/entries',entriesRoutes);
 
 //app.use(error404); // Middleware gestiona error 404
