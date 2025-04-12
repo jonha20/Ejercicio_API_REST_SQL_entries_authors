@@ -118,7 +118,6 @@ const updatedEntry = {
 updateEntry(updatedEntry)
     .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.email))
 
-//INSERT
 
 const insertEntry = async (entry) => {
     const { name, surname, email, image } = entry;

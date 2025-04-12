@@ -3,12 +3,23 @@ const queriesAuthors = require('../queries/authors.queries') // Queries SQL Auth
 const queriesEntry = require('../queries/entries.queries') // Queries SQL Entries
 
 const pool = new Pool({
+    host: 'dpg-cvt93e15pdvs739inslg-a.frankfurt-postgres.render.com',
+    user: 'api_sql_entries_authors_user',
+    port: '5432',
+    database: 'api_sql_entries_authors',
+    password: '5udZFrlUYfHbjA0vjXb5mqDYX6avhPyA',
+    ssl: {
+        rejectUnauthorized: false // Necesario para conexiones SSL en Render
+      }
+  });
+/*
+const pool = new Pool({
     host: 'localhost',
     user: 'postgres',
     port: '5432',
     database: 'postgres',
     password: '123456'
-  });
+  });*/
 
 //GET
 
