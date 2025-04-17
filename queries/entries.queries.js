@@ -1,6 +1,6 @@
 const queries = {
-    getAllEntriesSinId: `SELECT e.title,e.content,e.date,e.id_author,e.category
-    FROM public.entries AS e;`,
+    getAllEntriesSinId: `SELECT  t2.title,t2.content, t2.date,  t1.name, t1.surname, t1.image FROM authors t1
+inner join entries t2 on t2.id_author = t1.id_author;`,
     updateEntry:`UPDATE public.entries
 	SET 
         title=$1, 
