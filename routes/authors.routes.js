@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get('/', authorsController.getAllAuthors);
 router.get('/', authorsController.getAlejandru);
-router.get('/', authorsController.deleteEntry);
-router.get('/', authorsController.updateEntry);
-router.get('/', authorsController.insertEntry);
+router.delete('/', authorsController.deleteEntry);
+router.put('/', authorsController.updateEntry);
+router.post('/', authorsController.insertEntry);
 
 module.exports = router;

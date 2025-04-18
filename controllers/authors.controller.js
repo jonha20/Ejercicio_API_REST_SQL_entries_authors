@@ -17,7 +17,7 @@ const getAlejandru = async (req, res) => {
     "email" in alejandru 
   ) {
     try {
-      const response = await entry.deleteEntry(alejandru);
+      const response = await entry.getAlejandru(alejandru);
       res.status(200).json({
         items_updated: response,
         data: alejandru,
