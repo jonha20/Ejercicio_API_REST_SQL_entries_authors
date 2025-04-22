@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express(); // Inicializar servidor
-const port = 3000;
+const port = 3001;
 
 // Importar middlewares
 const error404 = require("./middlewares/error404");

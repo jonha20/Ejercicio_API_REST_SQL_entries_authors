@@ -1,17 +1,8 @@
-const { Pool } = require('pg');
+const pool = require('../config/db_pgsql');
 const queries = require('../queries/entries.queries') // Queries SQL
-
-const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    port: '5432',
-    database: 'postgres',
-    password: '123456'
-  });
-
 // GET
 
-const getAllEntriesSinId = async () => {
+const getAllEntries = async () => {
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
@@ -49,30 +40,28 @@ const deleteEntry = async (entry) => {
 //UPDATE 
 
 const updateEntry = async (entry) => {
-    const { title, content, date, email, category, old_title } = entry;
+    const { title, content, date, category, old_title } = entry;
     let client, result;
     try {
-        client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.updateEntry,[
+      client = await pool.connect(); // Conexión a la base de datos
+      const data = await client.query(queries.updateEntry,[
             title, 
             content,
             date,
-            email, 
             category,
             old_title
         ]);
-        result = data.rowCount
+        result = data.rows; // Número de filas actualizadas
     } catch (err) {
-        console.log(err);
-        throw err;
+      console.error("Error en la consulta SQL:", err.message);
+      throw err;
     } finally {
-        client.release();
+      if (client) client.release(); // Libera el cliente
     }
-    return result
-}
-
+    return result;
+  };
 const entries = {
-    getAllEntriesSinId,
+    getAllEntries,
     deleteEntry,
     updateEntry
 }
@@ -82,30 +71,30 @@ module.exports = entries;
 //DATOS POR CONSOLA
 
 
-getAllEntriesSinId()
-.then(data=>console.log(data))
+// getAllEntries()
+// .then(data=>console.log(data))
 
 
 
 
-const updatedEntry = {
-    title: "Bonita Semana Santa",
-    content: "Semana santa con back",
-    date:"2024-04-12",
-    email: "jonathan@thebridgeschool.es",
-    category: "Backend",
-    old_title:"Bonita Semana Santa"
-}
+// const updatedEntry = {
+//     title: "Bonita Semana Santa",
+//     content: "Semana santa con back",
+//     date:"2024-04-12",
+//     email: "jonathan@thebridgeschool.es",
+//     category: "Backend",
+//     old_title:"Bonita Semana Santa"
+// }
 
-updateEntry(updatedEntry)
-    .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.old_title))
-
-
+// updateEntry(updatedEntry)
+//     .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.old_title))
 
 
-const deletedEntry = {
-    title: "El rayo gana la champions"
-}
 
-deleteEntry(deletedEntry)
-    .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.title))
+
+// const deletedEntry = {
+//     title: "El rayo gana la champions"
+// }
+
+// deleteEntry(deletedEntry)
+//     .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.title))

@@ -1,16 +1,8 @@
-const { Pool } = require('pg');
+const pool = require('../config/db_pgsql');
 const queries = require('../queries/authors.queries') // Queries SQL
 
-const pool = new Pool({
-    host: 'localhost',
-    user: 'postgres',
-    port: '5432',
-    database: 'postgres',
-    password: '123456'
-  });
 
 //GET
-
 const getAllAuthors = async () => {
 let client, result;
 try {
@@ -26,16 +18,16 @@ try {
 return result
 }
 
-getAllAuthors()
-.then(data=>console.log(data))
+// getAllAuthors()
+// .then(data=>console.log(data))
 
 
-const getAlejandru = async (entry) => {
+const getEmail = async (entry) => {
 const {email} = entry;
 let client, result;
 try {
     client = await pool.connect(); // Espera a abrir conexion
-    const data = await client.query(queries.getAlejandru,[
+    const data = await client.query(queries.getEmail,[
         email
     ]);
     result = data.rows
@@ -49,21 +41,21 @@ return result
 }
 
 
-const getAlejandrudata = {
-    email: "alejandru@thebridgeschool.es"
-}
+// const getEmaildata = {
+//     email: "alejandru@thebridgeschool.es"
+// }
 
-getAlejandru(getAlejandrudata)
-    .then(data => console.log(data))
+// getEmail(getEmaildata)
+//     .then(data => console.log(data))
 
 //DELETE
 
-const deleteEntry = async (entry) => {
+const deleteAuthor = async (entry) => {
     const {email} = entry;
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.deleteEntry,[
+        const data = await client.query(queries.deleteAuthor,[
             email
         ]);
         result = data.rowCount
@@ -76,21 +68,21 @@ const deleteEntry = async (entry) => {
     return result
 }
 
-const deletedEntry = {
-    email: "jabier@thebridgeschool.es"
-}
+// const deletedEntry = {
+//     email: "jabier@thebridgeschool.es"
+// }
 
-deleteEntry(deletedEntry)
-    .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.email))
+// deleteAuthor(deletedEntry)
+//     .then(data => console.log("Se ha borrado la entry -> " + deletedEntry.email))
 
 //UPDATE
 
-const updateEntry = async (entry) => {
+const updateAuthor = async (entry) => {
     const { name, surname, email, image, old_email } = entry;
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.updateEntry,[
+        const data = await client.query(queries.updateAuthor,[
             name, 
             surname,
             email, 
@@ -107,24 +99,24 @@ const updateEntry = async (entry) => {
     return result
 }
 
-const updatedEntry = {
-    name: "Jonathan",
-    surname: "Moran",
-    email:"jonathan@thebridgeschool.es",
-    image: "imagen",
-    old_email: "jonathan@thebridgeschool.es"
-}
+// const updatedEntry = {
+//     name: "Jonathan",
+//     surname: "Moran",
+//     email:"jonathan@thebridgeschool.es",
+//     image: "imagen",
+//     old_email: "jonathan@thebridgeschool.es"
+// }
 
-updateEntry(updatedEntry)
-    .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.email))
+// updateAuthor(updatedEntry)
+//     .then(data => console.log("Se ha modificado la entry -> " + updatedEntry.email))
 
 
-const insertEntry = async (entry) => {
+const insertAuthor = async (entry) => {
     const { name, surname, email, image } = entry;
     let client, result;
     try {
         client = await pool.connect(); // Espera a abrir conexion
-        const data = await client.query(queries.insertEntry,[
+        const data = await client.query(queries.insertAuthor,[
             name, 
             surname,
             email, 
@@ -140,12 +132,22 @@ const insertEntry = async (entry) => {
     return result
 }
 
-const insertedEntry = {
-    name: "Sandra",
-    surname: "Moran",
-    email:"sandra@thebridgeschool.es",
-    image: "imagen"
+// const insertedEntry = {
+//     name: "Sandra",
+//     surname: "Moran",
+//     email:"sandra@thebridgeschool.es",
+//     image: "imagen"
+// }
+
+// insertAuthor(insertedEntry)
+//     .then(data => console.log("Se ha modificado la entry -> " + insertedEntry.email))
+
+const authors = {
+    getAllAuthors,
+    getEmail,
+    deleteAuthor,
+    updateAuthor,
+    insertAuthor
 }
 
-insertEntry(insertedEntry)
-    .then(data => console.log("Se ha modificado la entry -> " + insertedEntry.email))
+module.exports = authors;

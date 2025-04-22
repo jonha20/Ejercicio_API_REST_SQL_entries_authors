@@ -1,26 +1,41 @@
-const entry = require("../config/db_pgsql"); // Importar el modelo de la BBDD
+const author = require("../models/authors.model"); // Importar el modelo de la BBDD
 
 
 const getAllAuthors = async (req, res) => {
   let entries;
   try {
-      entries = await entry.getAllAuthors();
+      entries = await author.getAllAuthors();
     res.status(200).json(entries); // [] con las entries encontradas
   } catch (error) {
     res.status(500).json({ error: "Error en la BBDD" });
   }
 };
 
-const getAlejandru = async (req, res) => {
-  const alejandru = req.body; // {title}
+const getEmail = async (req, res) => {
+  const emailToSearch = req.params.email; // Email a buscar desde los parámetros de la URL
+  try {
+    const result = await author.getEmail({ email: emailToSearch }); // Llama al modelo con el email
+    if (result.length > 0) {
+      res.status(200).json(result[0]); // Devuelve el autor encontrado
+    } else {
+      res.status(404).json({ message: "Email no encontrado" }); // Si no se encuentra
+    }
+  } catch (error) {
+    console.error("Error al buscar el email:", error.message);
+    res.status(500).json({ error: "Error en la BBDD" });
+  }
+};
+
+const deleteAuthor = async (req, res) => {
+  const deleteAuthor = req.body; // {title}
   if (
-    "email" in alejandru 
+    "email" in deleteAuthor 
   ) {
     try {
-      const response = await entry.getAlejandru(alejandru);
+      const response = await author.deleteAuthor(deleteAuthor);
       res.status(200).json({
         items_updated: response,
-        data: alejandru,
+        data: deleteAuthor,
       });
     } catch (error) {
       res.status(500).json({ error: "Error en la BBDD" });
@@ -30,26 +45,7 @@ const getAlejandru = async (req, res) => {
   }
 };
 
-const deleteEntry = async (req, res) => {
-  const deleteEntry = req.body; // {title}
-  if (
-    "email" in deleteEntry 
-  ) {
-    try {
-      const response = await entry.deleteEntry(deleteEntry);
-      res.status(200).json({
-        items_updated: response,
-        data: deleteEntry,
-      });
-    } catch (error) {
-      res.status(500).json({ error: "Error en la BBDD" });
-    }
-  } else {
-    res.status(400).json({ error: "Faltan campos en la entrada" });
-  }
-};
-
-const updateEntry = async (req, res) => {
+const updateAuthor = async (req, res) => {
   const modifiedEntry = req.body; // {name,surname,email,image,old_title}
   if (
     "name" in modifiedEntry &&
@@ -59,7 +55,7 @@ const updateEntry = async (req, res) => {
     "old_email" in modifiedEntry 
   ) {
     try {
-      const response = await entry.updateEntry(modifiedEntry);
+      const response = await author.updateAuthor(modifiedEntry);
       res.status(200).json({
         items_updated: response,
         data: modifiedEntry,
@@ -72,19 +68,19 @@ const updateEntry = async (req, res) => {
   }
 };
 
-const insertEntry = async (req, res) => {
-  const insertEntry = req.body; // {name,surname,email,image,old_title}
+const insertAuthor = async (req, res) => {
+  const insertAuthor = req.body; // {name,surname,email,image,old_title}
   if (
-    "name" in insertEntry &&
-    "surname" in insertEntry &&
-    "email" in insertEntry &&
-    "image" in insertEntry
+    "name" in insertAuthor &&
+    "surname" in insertAuthor &&
+    "email" in insertAuthor &&
+    "image" in insertAuthor
   ) {
     try {
-      const response = await entry.insertEntry(insertEntry);
+      const response = await author.insertAuthor(insertAuthor);
       res.status(200).json({
         items_updated: response,
-        data: insertEntry,
+        data: insertAuthor,
       });
     } catch (error) {
       res.status(500).json({ error: "Error en la BBDD" });
@@ -96,8 +92,8 @@ const insertEntry = async (req, res) => {
 
 module.exports = {
 getAllAuthors,
-getAlejandru,
-deleteEntry,
-updateEntry,
-insertEntry
+getEmail,
+deleteAuthor,
+updateAuthor,
+insertAuthor
 };

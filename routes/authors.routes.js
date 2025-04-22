@@ -3,9 +3,9 @@ const authorsController = require("../controllers/authors.controller");
 const router = express.Router();
 
 router.get('/', authorsController.getAllAuthors);
-router.get('/', authorsController.getAlejandru);
-router.delete('/', authorsController.deleteEntry);
-router.put('/', authorsController.updateEntry);
-router.post('/', authorsController.insertEntry);
+router.get('/:email?', authorsController.getEmail);
+router.delete('/', authorsController.deleteAuthor);
+router.put('/', authorsController.updateAuthor);
+router.post('/', authorsController.insertAuthor);
 
 module.exports = router;
