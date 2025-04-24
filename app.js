@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express(); // Inicializar servidor
-const port = 3001;
+const cors = require('cors');
+app.use(cors()); // Habilitar CORS para todas las rutas
+const port = 3000;
 
 // Importar middlewares
 const error404 = require("./middlewares/error404");
