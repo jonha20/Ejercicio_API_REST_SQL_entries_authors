@@ -2,7 +2,7 @@ const express = require("express");
 const app = express(); // Inicializar servidor
 const cors = require('cors');
 app.use(cors()); // Habilitar CORS para todas las rutas
-const port = 3000;
+const port = 3001;
 
 // Importar middlewares
 const error404 = require("./middlewares/error404");
@@ -19,6 +19,10 @@ app.use(express.json()); // Habilito recepción de JSON en servidor
 
 
 // Rutas
+// Definir una ruta de prueba
+app.get('/', (req, res) => {
+  res.send('¡Hola Mundo!');
+});
 //API
 
 app.use('/api/authors',authorsRoutes);
