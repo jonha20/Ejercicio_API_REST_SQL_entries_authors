@@ -5,5 +5,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
+console.log('DATABASE_URL >>>', process.env.DATABASE_URL);
 
 module.exports = pool;
